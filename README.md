@@ -1,3 +1,4 @@
+[![Pylint](https://github.com/Charitha-Jeewanka/GNN-Node-Classification-with-Custom-Message-Passing/actions/workflows/pylint.yml/badge.svg)](https://github.com/<USERNAME>/<REPOSITORY>/actions/workflows/pylint.yml)
 # GNN Node Classification with Custom Message Passing
 
 This repository implements, compares, and evaluates various Message-Passing Graph Neural Networks (GNNs) for node classification on citation networks. Using the Cora dataset, we analyze the performance of **Graph Convolutional Networks (GCN)**, **GraphSAGE** (utilizing Mean, Max, and LSTM aggregation), and a **Custom Graph Attention Network (GAT)** modeled as normalized edge gates.
