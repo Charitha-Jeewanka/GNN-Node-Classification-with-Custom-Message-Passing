@@ -1,0 +1,24 @@
+# GNN Node Classification Config
+
+dataset:
+  name: "Cora"
+  root_dir: "./data"
+
+model:
+  type: "GCN"           # 'GCN', 'GraphSAGE', 'CustomAttention'
+  hidden_dim: 64
+  num_layers: 2
+  dropout: 0.5
+  sage_aggregator: "mean"  # 'mean', 'max', 'lstm' (for Milestone 3)
+
+training:
+  epochs: 200
+  lr: 0.01
+  weight_decay: 0.0005
+  seed: 42
+  device: "cuda"        # 'cuda' or 'cpu'
+
+visualization:
+  subgraph_nodes: 50    # Number of nodes in the visualized subgraph
+  seed_node: 0          # Seed node to start BFS for subgraph selection
+  output_dir: "./outputs"
