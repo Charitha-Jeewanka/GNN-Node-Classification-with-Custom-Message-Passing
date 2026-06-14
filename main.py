@@ -161,10 +161,12 @@ def main() -> None:
             best_epoch = epoch
             # Save best model weights
             os.makedirs("checkpoints", exist_ok=True)
-            torch.save(
-                model.state_dict(),
-                f"checkpoints/best_{config.model.type.lower()}_model.pth"
-            )
+            if config.model.type == "GraphSAGE":
+                weights_filename = f"best_graphsage_{config.model.sage_aggregator.lower()}_model.pth"
+            else:
+                weights_filename = f"best_{config.model.type.lower()}_model.pth"
+            best_weights_path = os.path.join("checkpoints", weights_filename)
+            torch.save(model.state_dict(), best_weights_path)
 
         if epoch == 1 or epoch % 10 == 0 or epoch == config.training.epochs:
             logger.info(
@@ -175,7 +177,11 @@ def main() -> None:
     logger.info(f"Training completed. Best Val Acc: {best_val_acc:.4f} at Epoch {best_epoch}.")
     
     # Load best model weights and evaluate final test performance
-    best_weights_path = f"checkpoints/best_{config.model.type.lower()}_model.pth"
+    if config.model.type == "GraphSAGE":
+        weights_filename = f"best_graphsage_{config.model.sage_aggregator.lower()}_model.pth"
+    else:
+        weights_filename = f"best_{config.model.type.lower()}_model.pth"
+    best_weights_path = os.path.join("checkpoints", weights_filename)
     if os.path.exists(best_weights_path):
         model.load_state_dict(torch.load(best_weights_path, weights_only=True))
         logger.info(f"Loaded best model weights from '{best_weights_path}'")

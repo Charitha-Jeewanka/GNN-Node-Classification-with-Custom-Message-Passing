@@ -32,6 +32,13 @@ class GCN(torch.nn.Module):
         x = self.conv2(x, edge_index)
         return x
 
+    def get_embeddings(self, x: Tensor, edge_index: Tensor) -> Tensor:
+        """Extracts the learned node embeddings from the first GCN layer."""
+        self.eval()
+        with torch.no_grad():
+            emb = self.conv1(x, edge_index)
+        return emb
+
 
 class GraphSAGE(torch.nn.Module):
     """A 2-layer GraphSAGE model for node classification.
@@ -62,6 +69,15 @@ class GraphSAGE(torch.nn.Module):
         x = self.conv2(x, edge_index)
         return x
 
+    def get_embeddings(self, x: Tensor, edge_index: Tensor) -> Tensor:
+        """Extracts the learned node embeddings from the first GraphSAGE layer."""
+        self.eval()
+        with torch.no_grad():
+            # In GraphSAGE, conv1 projects neighbor features in forward.
+            # Here we extract the output of conv1.
+            emb = self.conv1(x, edge_index)
+        return emb
+
 
 class CustomAttentionGNN(torch.nn.Module):
     """A 2-layer Graph Neural Network using custom attention-weighted aggregation (Simplified GAT).
@@ -91,3 +107,10 @@ class CustomAttentionGNN(torch.nn.Module):
         # Second Layer
         x = self.conv2(x, edge_index)
         return x
+
+    def get_embeddings(self, x: Tensor, edge_index: Tensor) -> Tensor:
+        """Extracts the learned node embeddings from the first Attention layer."""
+        self.eval()
+        with torch.no_grad():
+            emb = self.conv1(x, edge_index)
+        return emb
