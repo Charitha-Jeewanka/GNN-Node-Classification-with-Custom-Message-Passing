@@ -11,7 +11,7 @@ import torch.nn as nn
 from src.config import load_config
 from src.dataset import load_planetoid_dataset
 from src.engine import evaluate, train_epoch
-from src.models import GCN
+from src.models import GCN, GraphSAGE, CustomAttentionGNN
 from src.visualization import plot_subgraph, plot_training_curves
 
 # Configure logging to console and a log file
@@ -103,8 +103,24 @@ def main() -> None:
             out_channels=dataset.num_classes,
             dropout=config.model.dropout
         )
+    elif config.model.type == "GraphSAGE":
+        model = GraphSAGE(
+            in_channels=dataset.num_features,
+            hidden_dim=config.model.hidden_dim,
+            out_channels=dataset.num_classes,
+            aggregator_type=config.model.sage_aggregator,
+            dropout=config.model.dropout
+        )
+    elif config.model.type == "CustomAttention":
+        model = CustomAttentionGNN(
+            in_channels=dataset.num_features,
+            hidden_dim=config.model.hidden_dim,
+            out_channels=dataset.num_classes,
+            dropout=config.model.dropout,
+            attn_dropout=0.1  # Set 10% attention dropout for regularization
+        )
     else:
-        logger.error(f"Model type '{config.model.type}' is not supported yet.")
+        logger.error(f"Model type '{config.model.type}' is not supported.")
         return
 
     model = model.to(device)
@@ -168,7 +184,10 @@ def main() -> None:
     logger.info(f"Final Test Accuracy of best model: {test_acc:.4f} (Test Loss: {test_loss:.4f})")
 
     # Save training curves plot
-    curves_filename = f"{config.model.type.lower()}_training_curves.png"
+    if config.model.type == "GraphSAGE":
+        curves_filename = f"graphsage_{config.model.sage_aggregator.lower()}_training_curves.png"
+    else:
+        curves_filename = f"{config.model.type.lower()}_training_curves.png"
     curves_path = os.path.join(config.visualization.output_dir, curves_filename)
     plot_training_curves(
         train_losses=train_losses,
@@ -178,7 +197,7 @@ def main() -> None:
         output_path=curves_path
     )
     
-    logger.info("Milestone 2 successfully completed.")
+    logger.info(f"Training and evaluation of {config.model.type} completed successfully.")
 
 if __name__ == "__main__":
     main()

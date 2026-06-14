@@ -40,6 +40,8 @@ When I ask you to begin, we will work through these milestones sequentially. Do 
   - Plot loss curves and test accuracy per aggregator type side-by-side.
   - Extract the learned node embeddings.
   - Use UMAP or t-SNE to visualize the embeddings and analyze if nodes in the same class cluster effectively.
-* **Milestone 6: Scale (Stretch Goal)**
-  - Adapt the data loaders to swap the dataset to `OGB-arxiv`.
-  - Validate if the previous conclusions hold at this larger scale.
+* **Milestone 6: Documentation**
+  - Create a README.md file with the results.
+  - Use the generated images.
+  - Create a cookbook for easy reproducing.
+  - Create a MIT license file.

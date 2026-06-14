@@ -1,0 +1,47 @@
+[
+    {
+        "Model": "GCN",
+        "Aggregator": "N/A (Symmetric)",
+        "Best Val Acc": 0.812,
+        "Best Epoch": 47,
+        "Test Acc": 0.815,
+        "Test Loss": 1.0971,
+        "Status": "Success"
+    },
+    {
+        "Model": "GraphSAGE",
+        "Aggregator": "mean",
+        "Best Val Acc": 0.792,
+        "Best Epoch": 26,
+        "Test Acc": 0.803,
+        "Test Loss": 0.9091,
+        "Status": "Success"
+    },
+    {
+        "Model": "GraphSAGE",
+        "Aggregator": "max",
+        "Best Val Acc": 0.784,
+        "Best Epoch": 32,
+        "Test Acc": 0.78,
+        "Test Loss": 0.8928,
+        "Status": "Success"
+    },
+    {
+        "Model": "GraphSAGE",
+        "Aggregator": "lstm",
+        "Best Val Acc": 0.736,
+        "Best Epoch": 19,
+        "Test Acc": 0.739,
+        "Test Loss": 1.0495,
+        "Status": "Success"
+    },
+    {
+        "Model": "CustomAttention",
+        "Aggregator": "Attention Gating",
+        "Best Val Acc": 0.822,
+        "Best Epoch": 62,
+        "Test Acc": 0.799,
+        "Test Loss": 0.8953,
+        "Status": "Success"
+    }
+]
